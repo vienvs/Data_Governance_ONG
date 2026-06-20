@@ -102,10 +102,42 @@ section[data-testid="stSidebar"] .block-container { padding-top: 1.2rem; }
 </style>
 """
 
+_CSS_ESCURO = """
+<style>
+.stApp { background-color: #1e1a17; }
+.stApp, .main .block-container, p, li, label, .stMarkdown,
+[data-testid="stWidgetLabel"], [data-testid="stMarkdownContainer"] {
+    color: #F3EAE3 !important;
+}
+h1, h2, h3, h4 { color: #FFF3EC !important; }
+[data-testid="stCaptionContainer"], .stCaption { color: #C9BBB0 !important; }
 
-def aplicar_estilo() -> None:
-    """Injeta o CSS global. Deve ser chamada uma vez por pagina."""
+section[data-testid="stSidebar"] { background: #2a2420 !important; }
+
+div[data-testid="stVerticalBlockBorderWrapper"] {
+    background: #2a2420 !important;
+    border-color: #4a3f37 !important;
+}
+div[data-testid="stExpander"] { background: #2a2420 !important; }
+div[data-testid="stExpander"] details { background: #2a2420 !important; }
+
+.stTextInput input, .stNumberInput input, .stDateInput input, textarea,
+div[data-baseweb="select"] > div {
+    background-color: #2f2823 !important;
+    color: #F3EAE3 !important;
+}
+</style>
+"""
+
+
+def aplicar_estilo(escuro: bool = False) -> None:
+    """Injeta o CSS global. Deve ser chamada uma vez por pagina.
+
+    Se escuro for True, aplica tambem o tema escuro por cima do tema claro.
+    """
     st.markdown(_CSS, unsafe_allow_html=True)
+    if escuro:
+        st.markdown(_CSS_ESCURO, unsafe_allow_html=True)
 
 
 def hero(titulo: str, subtitulo: str = "") -> None:

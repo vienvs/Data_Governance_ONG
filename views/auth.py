@@ -15,8 +15,8 @@ from services.validators import campos_obrigatorios_ausentes
 
 def render() -> None:
     ui.hero(
-        "Bem-vindo à Cuida ONG",
-        "Conectamos cães e gatos a lares responsáveis. Entre ou crie sua conta para começar.",
+        "Bem-vindo à Adota Pet SJC e RonRon",
+        "Conectamos cães e gatos a lares responsáveis em São José dos Campos. Entre ou crie sua conta para começar.",
     )
 
     col_form, col_info = st.columns([3, 2])

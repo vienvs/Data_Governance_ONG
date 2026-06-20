@@ -27,7 +27,7 @@ def _abs(path_str: str) -> Path:
 DB_PATH: Path = _abs(os.getenv("DB_PATH", "./ong_adocao.db"))
 
 # Codigo de acesso que concede perfil de administrador no cadastro
-CODIGO_ACESSO_ONG: str = os.getenv("CODIGO_ACESSO_ONG", "ong2026admin")
+CODIGO_ACESSO_ONG: str = os.getenv("CODIGO_ACESSO_ONG", "0000")
 
 # Diretorio raiz para arquivos enviados (fotos/documentos)
 STORAGE_DIR: Path = _abs(os.getenv("STORAGE_DIR", "./storage"))

@@ -25,6 +25,9 @@ try:
 except Exception:
     TEM_OPTION_MENU = False
 
+NOME_ONG = "Adota Pet SJC e RonRon"
+INSTAGRAM_URL = "https://www.instagram.com/adotapetsjc/"
+
 
 @st.cache_resource
 def _bootstrap() -> bool:
@@ -59,13 +62,25 @@ def _menu(titulo, labels, icones, chave):
     return st.radio(titulo, labels, key=chave)
 
 
+def _rodape_sidebar() -> None:
+    """Rodape comum da barra lateral: modo escuro e link do Instagram."""
+    st.write("")
+    st.toggle("Modo escuro", key="modo_escuro")
+    st.markdown(
+        f"<a href='{INSTAGRAM_URL}' target='_blank' "
+        "style='text-decoration:none;font-weight:700;'>Siga no Instagram @adotapetsjc</a>",
+        unsafe_allow_html=True,
+    )
+
+
 def _pagina_publica() -> None:
     paginas = {"Início": None, "Catálogo de animais": catalogo.render}
     icones = ["door-open", "heart"]
     with st.sidebar:
-        st.markdown("### Cuida ONG")
-        st.caption("Adoção responsável de cães e gatos")
+        st.markdown(f"### {NOME_ONG}")
+        st.caption("Adoção responsável de cães e gatos em São José dos Campos")
         escolha = _menu("Menu", list(paginas.keys()), icones, "menu_publico")
+        _rodape_sidebar()
     if escolha == "Catálogo de animais":
         catalogo.render()
     else:
@@ -88,17 +103,17 @@ def _pagina_autenticada(usuario) -> None:
         icones.append(paginas[label][0])
 
     with st.sidebar:
-        st.markdown("### Cuida ONG")
+        st.markdown(f"### {NOME_ONG}")
         st.caption(f"Olá, {usuario.nome}")
         papel = "Administrador" if usuario.is_admin else "Usuário comum"
         st.markdown(ui.badge(papel, "ok" if usuario.is_admin else "wait"),
                     unsafe_allow_html=True)
         st.write("")
         escolha = _menu("Menu", labels, icones, "menu_app")
-        st.write("")
         if st.button("Sair", use_container_width=True):
             session.encerrar_sessao()
             st.rerun()
+        _rodape_sidebar()
 
     try:
         paginas[escolha][1]()
@@ -107,8 +122,9 @@ def _pagina_autenticada(usuario) -> None:
 
 
 def main() -> None:
-    st.set_page_config(page_title="Cuida ONG - Adocao", layout="wide")
-    ui.aplicar_estilo()
+    st.set_page_config(page_title=NOME_ONG, layout="wide")
+    escuro = st.session_state.get("modo_escuro", False)
+    ui.aplicar_estilo(escuro)
     _bootstrap()
 
     usuario = session.usuario_atual()

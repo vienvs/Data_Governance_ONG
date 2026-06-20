@@ -46,8 +46,19 @@ def salvar_arquivo(arquivo, categoria: str, chave: str = "") -> str:
 
 
 def caminho_absoluto(caminho_relativo: str) -> Path:
-    """Resolve o caminho absoluto a partir do caminho relativo persistido."""
-    return config.STORAGE_DIR / caminho_relativo
+    """Resolve o caminho absoluto a partir do caminho relativo persistido.
+
+    Primeiro procura em STORAGE_DIR (arquivos enviados pela aplicacao).
+    Se nao encontrar, procura relativo a raiz do projeto, o que permite
+    referenciar imagens versionadas (por exemplo, a pasta images/).
+    """
+    no_storage = config.STORAGE_DIR / caminho_relativo
+    if no_storage.exists():
+        return no_storage
+    na_raiz = config.BASE_DIR / caminho_relativo
+    if na_raiz.exists():
+        return na_raiz
+    return no_storage
 
 
 def arquivo_existe(caminho_relativo: str | None) -> bool:

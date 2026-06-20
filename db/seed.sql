@@ -27,23 +27,23 @@ INSERT INTO usuario (id, nome, email, senha_hash, data_nascimento, tipo) VALUES
 -- ficticios de proposito: o painel exibe "imagem indisponivel" sem quebrar.
 INSERT INTO dono (id, usuario_id, cpf, telefone, endereco, tipo_residencia, tem_tela,
                   caminho_doc, caminho_comprovante, caminho_tela, status_aprovacao) VALUES
- (1, 2, '12345678901', '(11) 90000-0001', 'Rua das Flores, 100 - Sao Paulo/SP', 'casa', 1,
-     'documentos/exemplo_doc1.jpg', 'comprovantes/exemplo_comp1.jpg', 'telas/exemplo_tela1.jpg', 'aprovado'),
- (2, 3, '23456789012', '(11) 90000-0002', 'Av. Brasil, 250 - Sao Paulo/SP', 'apartamento', 1,
-     'documentos/exemplo_doc2.jpg', 'comprovantes/exemplo_comp2.jpg', 'telas/exemplo_tela2.jpg', 'em_analise'),
- (3, 4, '34567890123', '(11) 90000-0003', 'Rua Verde, 75 - Sao Paulo/SP', 'casa', 1,
-     'documentos/exemplo_doc3.jpg', 'comprovantes/exemplo_comp3.jpg', 'telas/exemplo_tela3.jpg', 'aprovado');
+ (1, 2, '12345678901', '(12) 90000-0001', 'Rua das Flores, 100 - Sao Jose dos Campos/SP', 'casa', 1,
+     'images/Identidade Maria.webp', 'images/Comprovante de Residencia.jpg', 'images/Com tela.jpg', 'aprovado'),
+ (2, 3, '23456789012', '(12) 90000-0002', 'Av. Brasil, 250 - Sao Jose dos Campos/SP', 'apartamento', 1,
+     'images/Identidade Joao.webp', 'images/Comprovante de Residencia.jpg', 'images/Com tela 2.webp', 'em_analise'),
+ (3, 4, '34567890123', '(12) 90000-0003', 'Rua Verde, 75 - Sao Jose dos Campos/SP', 'casa', 1,
+     'images/Identidade Maria.webp', 'images/Comprovante de Residencia.jpg', 'images/Com tela.jpg', 'aprovado');
 
 -- Animais: 3 caes disponiveis, 3 gatos disponiveis, 2 adotados.
-INSERT INTO animal (id, nome, especie, sexo, idade, raca, descricao, status) VALUES
- (1, 'Rex',     'cao',  'macho', 3, 'SRD',           'Docil e brincalhao.',            'disponivel'),
- (2, 'Thor',    'cao',  'macho', 5, 'Labrador',      'Calmo, bom com criancas.',       'disponivel'),
- (3, 'Bidu',    'cao',  'femea', 1, 'SRD',           'Filhote cheia de energia.',      'disponivel'),
- (4, 'Mimi',    'gato', 'femea', 2, 'SRD',           'Independente e carinhosa.',      'disponivel'),
- (5, 'Frajola', 'gato', 'macho', 4, 'Siames',        'Gosta de colo.',                 'disponivel'),
- (6, 'Nina',    'gato', 'femea', 1, 'SRD',           'Curiosa e ativa.',               'disponivel'),
- (7, 'Bob',     'cao',  'macho', 6, 'Poodle',        'Adotado, companheiro fiel.',     'adotado'),
- (8, 'Lola',    'gato', 'femea', 3, 'SRD',           'Adotada, muito tranquila.',      'adotado');
+INSERT INTO animal (id, nome, especie, sexo, idade, raca, descricao, status, caminho_foto) VALUES
+ (1, 'Rex',     'cao',  'macho', 3, 'SRD',      'Docil e brincalhao.',        'disponivel', 'images/Cachorro 1.jpg'),
+ (2, 'Thor',    'cao',  'macho', 5, 'Labrador', 'Calmo, bom com criancas.',   'disponivel', 'images/Cachorro 2.jpg'),
+ (3, 'Bidu',    'cao',  'femea', 1, 'SRD',      'Filhote cheia de energia.',  'disponivel', 'images/Cachorro 3.jpg'),
+ (4, 'Mimi',    'gato', 'femea', 2, 'SRD',      'Independente e carinhosa.',  'disponivel', 'images/Gato 1.jpg'),
+ (5, 'Frajola', 'gato', 'macho', 4, 'Siames',   'Gosta de colo.',             'disponivel', 'images/Gato 2.jpg'),
+ (6, 'Nina',    'gato', 'femea', 1, 'SRD',      'Curiosa e ativa.',           'disponivel', 'images/Gato 3.jpg'),
+ (7, 'Bob',     'cao',  'macho', 6, 'Poodle',   'Adotado, companheiro fiel.', 'adotado',    'images/Cachorro 4.jpg'),
+ (8, 'Lola',    'gato', 'femea', 3, 'SRD',      'Adotada, muito tranquila.',  'adotado',    'images/Gato 4.jpg');
 
 -- Adocoes: 2 aprovadas (uma por animal adotado), 2 em analise, 1 reprovada.
 INSERT INTO solicitacao_adocao

@@ -46,7 +46,11 @@ def autenticar(conn: sqlite3.Connection, email: str, senha: str) -> Usuario:
     if row is None or not verificar_senha(senha, row["senha_hash"]):
         raise CredenciaisInvalidasError()
     usuario = _row_para_usuario(row)
-    servico_auditoria.registrar(
-        conn, usuario.id, "login", "usuario", usuario.id, "Autenticacao bem-sucedida"
-    )
+    try:
+        servico_auditoria.registrar(
+            conn, usuario.id, "login", "usuario", usuario.id, "Autenticacao bem-sucedida"
+        )
+    except Exception:
+        # uma falha ao gravar o log de auditoria nao deve impedir o login
+        pass
     return usuario
