@@ -65,14 +65,22 @@ def _rodape_sidebar() -> None:
 
 
 def _pagina_publica() -> None:
-    paginas = {"Início": None, "Catálogo de animais": catalogo.render}
-    icones = ["door-open", "heart"]
+    st.session_state.setdefault("pagina_publica", "login")
+    atual = st.session_state["pagina_publica"]
     with st.sidebar:
         st.markdown(f"### {NOME_ONG}")
         st.caption("Adoção responsável de cães e gatos em São José dos Campos")
-        escolha = _menu("Menu", list(paginas.keys()), icones, "menu_publico")
+        st.write("")
+        if st.button("Entrar / Criar conta", use_container_width=True, key="nav_login",
+                     type="primary" if atual == "login" else "secondary"):
+            st.session_state["pagina_publica"] = "login"
+            st.rerun()
+        if st.button("Catálogo de animais", use_container_width=True, key="nav_catalogo",
+                     type="primary" if atual == "catalogo" else "secondary"):
+            st.session_state["pagina_publica"] = "catalogo"
+            st.rerun()
         _rodape_sidebar()
-    if escolha == "Catálogo de animais":
+    if atual == "catalogo":
         catalogo.render()
     else:
         auth.render()

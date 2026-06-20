@@ -84,6 +84,20 @@ h1, h2, h3, h4 { color: var(--cor-texto); letter-spacing: -0.01em; }
 }
 .stButton > button:hover { filter: brightness(0.94); color: #FFFFFF; }
 
+/* Botao secundario: contorno neutro (usado na navegacao publica) */
+.stButton > button[kind="secondary"],
+.stButton > button[data-testid="stBaseButton-secondary"] {
+    background: transparent;
+    color: var(--cor-texto);
+    border: 1px solid var(--cor-borda);
+}
+.stButton > button[kind="secondary"]:hover,
+.stButton > button[data-testid="stBaseButton-secondary"]:hover {
+    border-color: var(--cor-primaria);
+    color: var(--cor-primaria);
+    filter: none;
+}
+
 /* Cartoes: borda fina, cantos discretos, sem sombra/elevacao */
 div[data-testid="stVerticalBlockBorderWrapper"] {
     border-radius: 8px !important;
