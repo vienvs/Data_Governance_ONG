@@ -6,7 +6,7 @@ from datetime import date
 
 import streamlit as st
 
-from app import session
+from app import session, ui
 from db.connection import get_connection
 from services import servico_autenticacao, servico_cadastro_usuario
 from services.errors import ErroDominio
@@ -14,20 +14,40 @@ from services.validators import campos_obrigatorios_ausentes
 
 
 def render() -> None:
-    st.title("ONG de Adocao - Acesso")
-    aba_login, aba_cadastro = st.tabs(["Entrar", "Criar conta"])
+    ui.hero(
+        "Bem-vindo à Cuida ONG",
+        "Conectamos cães e gatos a lares responsáveis. Entre ou crie sua conta para começar.",
+    )
 
-    with aba_login:
-        _form_login()
-    with aba_cadastro:
-        _form_cadastro()
+    col_form, col_info = st.columns([3, 2])
+    with col_form:
+        aba_login, aba_cadastro = st.tabs(["Entrar", "Criar conta"])
+        with aba_login:
+            _form_login()
+        with aba_cadastro:
+            _form_cadastro()
+    with col_info:
+        _painel_demo()
+
+
+def _painel_demo() -> None:
+    with st.container(border=True):
+        st.markdown("#### Contas de demonstração")
+        st.caption("Use estas contas para testar. Senha de todas: senha123")
+        st.markdown(
+            "- Administrador: `admin@ong.org`\n"
+            "- Usuária: `maria@email.com`\n"
+            "- Usuário: `joao@email.com`\n"
+            "- Usuária: `ana@email.com`"
+        )
+        st.info("O administrador acessa o painel de gestão. Os demais são adotantes.")
 
 
 def _form_login() -> None:
     with st.form("login"):
         email = st.text_input("Email")
         senha = st.text_input("Senha", type="password")
-        enviar = st.form_submit_button("Entrar")
+        enviar = st.form_submit_button("Entrar", use_container_width=True)
     if enviar:
         try:
             with closing(get_connection()) as conn:
@@ -50,11 +70,11 @@ def _form_cadastro() -> None:
             value=date(2000, 1, 1),
         )
         codigo = st.text_input(
-            "Codigo de acesso da ONG (opcional)",
-            help="Deixe em branco para conta comum. Preencha apenas se a ONG forneceu um codigo de administrador.",
+            "Código de acesso da ONG (opcional)",
+            help="Deixe em branco para conta comum. Preencha apenas se a ONG forneceu um código de administrador.",
             type="password",
         )
-        enviar = st.form_submit_button("Cadastrar")
+        enviar = st.form_submit_button("Cadastrar", use_container_width=True)
     if enviar:
         faltando = campos_obrigatorios_ausentes(
             {"nome": nome, "email": email, "senha": senha},

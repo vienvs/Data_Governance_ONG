@@ -9,7 +9,7 @@ from __future__ import annotations
 class ErroDominio(Exception):
     """Base de todas as excecoes de regra de negocio."""
 
-    mensagem_usuario: str = "Ocorreu um erro ao processar a solicitacao."
+    mensagem_usuario: str = "Ocorreu um erro ao processar a solicitação."
 
     def __init__(self, mensagem: str | None = None):
         super().__init__(mensagem or self.mensagem_usuario)
@@ -18,63 +18,63 @@ class ErroDominio(Exception):
 
 # Autenticacao e cadastro
 class CredenciaisInvalidasError(ErroDominio):
-    mensagem_usuario = "Email ou senha invalidos."
+    mensagem_usuario = "Email ou senha inválidos."
 
 
 class CodigoAcessoInvalidoError(ErroDominio):
-    mensagem_usuario = "Codigo de acesso da ONG invalido."
+    mensagem_usuario = "Código de acesso da ONG inválido."
 
 
 class EmailJaExistenteError(ErroDominio):
-    mensagem_usuario = "Ja existe uma conta com este email."
+    mensagem_usuario = "Já existe uma conta com este email."
 
 
 class EmailInvalidoError(ErroDominio):
-    mensagem_usuario = "O email informado nao tem um formato valido."
+    mensagem_usuario = "O email informado não tem um formato válido."
 
 
 # Perfil de Dono
 class CpfInvalidoError(ErroDominio):
-    mensagem_usuario = "O CPF deve conter 11 digitos numericos."
+    mensagem_usuario = "O CPF deve conter 11 dígitos numéricos."
 
 
 class CpfJaExistenteError(ErroDominio):
-    mensagem_usuario = "Este CPF ja esta cadastrado."
+    mensagem_usuario = "Este CPF já está cadastrado."
 
 
 class PerfilDonoJaExisteError(ErroDominio):
-    mensagem_usuario = "Voce ja possui um perfil de dono."
+    mensagem_usuario = "Você já possui um perfil de dono."
 
 
 # Adocao
 class AnimalIndisponivelError(ErroDominio):
-    mensagem_usuario = "Este animal nao esta disponivel para adocao."
+    mensagem_usuario = "Este animal não está disponível para adoção."
 
 
 class AnimalJaAdotadoError(ErroDominio):
-    mensagem_usuario = "Este animal ja foi adotado."
+    mensagem_usuario = "Este animal já foi adotado."
 
 
 class SolicitacaoDuplicadaError(ErroDominio):
-    mensagem_usuario = "Voce ja possui uma solicitacao em analise para este animal."
+    mensagem_usuario = "Você já possui uma solicitação em análise para este animal."
 
 
 class AceiteTermoObrigatorioError(ErroDominio):
-    mensagem_usuario = "E necessario aceitar o Termo de Compromisso para concluir a adocao."
+    mensagem_usuario = "É necessário aceitar o Termo de Compromisso para concluir a adoção."
 
 
 class SolicitacaoInexistenteError(ErroDominio):
-    mensagem_usuario = "Solicitacao inexistente ou nao esta em analise."
+    mensagem_usuario = "Solicitação inexistente ou não está em análise."
 
 
 # Acesso e arquivos
 class AcessoNegadoError(ErroDominio):
-    mensagem_usuario = "Voce nao tem permissao para executar esta operacao."
+    mensagem_usuario = "Você não tem permissão para executar esta operação."
 
 
 class ArquivoInvalidoError(ErroDominio):
-    mensagem_usuario = "Arquivo invalido. Envie uma imagem em formato permitido (JPG, PNG, WEBP)."
+    mensagem_usuario = "Arquivo inválido. Envie uma imagem em formato permitido (JPG, PNG, WEBP)."
 
 
 class CamposObrigatoriosError(ErroDominio):
-    mensagem_usuario = "Preencha todos os campos obrigatorios."
+    mensagem_usuario = "Preencha todos os campos obrigatórios."

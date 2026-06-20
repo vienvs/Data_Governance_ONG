@@ -43,15 +43,15 @@ class TipoResidencia(str, Enum):
 
 # Rotulos amigaveis para exibicao na interface
 ROTULOS = {
-    "tipo_usuario": {"comum": "Usuario comum", "admin": "Administrador"},
+    "tipo_usuario": {"comum": "Usuário comum", "admin": "Administrador"},
     "status_aprovacao": {
-        "em_analise": "Em Analise",
+        "em_analise": "Em análise",
         "aprovado": "Aprovado",
         "reprovado": "Reprovado",
     },
-    "status_animal": {"disponivel": "Disponivel", "adotado": "Adotado"},
-    "especie": {"cao": "Cao", "gato": "Gato"},
-    "sexo": {"macho": "Macho", "femea": "Femea"},
+    "status_animal": {"disponivel": "Disponível", "adotado": "Adotado"},
+    "especie": {"cao": "Cão", "gato": "Gato"},
+    "sexo": {"macho": "Macho", "femea": "Fêmea"},
     "tipo_residencia": {"casa": "Casa", "apartamento": "Apartamento"},
 }
 
