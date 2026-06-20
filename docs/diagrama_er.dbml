@@ -1,0 +1,85 @@
+// =====================================================================
+// Diagrama ER - Sistema de Gestao ONG de Adocao
+// Cole este conteudo em https://dbdiagram.io para gerar o diagrama visual.
+// (DBML - Database Markup Language)
+// =====================================================================
+
+Table usuario {
+  id              integer      [pk, increment]
+  nome            varchar      [not null]
+  email           varchar      [not null, unique]
+  senha_hash      varchar      [not null]
+  data_nascimento date         [not null]
+  tipo            varchar      [not null, note: "comum | admin"]
+  criado_em       datetime
+}
+
+Table dono {
+  id                  integer [pk, increment]
+  usuario_id          integer [not null, unique, ref: > usuario.id]
+  cpf                 varchar [not null, unique, note: "11 digitos"]
+  telefone            varchar [not null]
+  endereco            varchar [not null]
+  tipo_residencia     varchar [not null, note: "casa | apartamento"]
+  tem_tela            boolean [not null]
+  caminho_doc         varchar [not null]
+  caminho_comprovante varchar [not null]
+  caminho_tela        varchar [not null]
+  status_aprovacao    varchar [not null, note: "em_analise | aprovado | reprovado"]
+  criado_em           datetime
+}
+
+Table animal {
+  id           integer [pk, increment]
+  nome         varchar [not null]
+  especie      varchar [not null, note: "cao | gato"]
+  sexo         varchar [not null, note: "macho | femea"]
+  idade        integer [not null, note: ">= 0"]
+  raca         varchar
+  descricao    text
+  status       varchar [not null, note: "disponivel | adotado"]
+  caminho_foto varchar
+  criado_em    datetime
+}
+
+Table solicitacao_adocao {
+  id                     integer  [pk, increment]
+  dono_id                integer  [not null, ref: > dono.id]
+  animal_id              integer  [not null, ref: > animal.id]
+  data_solicitacao       datetime
+  status                 varchar  [not null, note: "em_analise | aprovado | reprovado"]
+  observacoes_admin      text
+  respostas_questionario text     [not null, note: "JSON"]
+  aceite_termo           boolean  [not null]
+  decidido_por           integer  [ref: > usuario.id]
+  decidido_em            datetime
+
+  Note: 'Indice unico parcial: no maximo 1 adocao aprovada por animal (WHERE status=aprovado).'
+}
+
+Table solicitacao_castracao {
+  id               integer  [pk, increment]
+  usuario_id       integer  [not null, ref: > usuario.id]
+  nome_pet         varchar  [not null]
+  especie          varchar  [not null, note: "cao | gato"]
+  sexo             varchar  [not null, note: "macho | femea"]
+  idade_pet        integer  [not null, note: ">= 0"]
+  nome_tutor       varchar  [not null]
+  telefone         varchar  [not null]
+  endereco         varchar  [not null]
+  data_solicitacao datetime
+  data_agendada    date     [note: "data do procedimento (agenda)"]
+  status           varchar  [not null, note: "em_analise | aprovado | reprovado"]
+  decidido_por     integer  [ref: > usuario.id]
+  decidido_em      datetime
+}
+
+Table log_auditoria {
+  id          integer  [pk, increment]
+  usuario_id  integer  [ref: > usuario.id]
+  acao        varchar  [not null]
+  entidade    varchar  [not null]
+  registro_id integer
+  detalhe     text
+  data_hora   datetime
+}
