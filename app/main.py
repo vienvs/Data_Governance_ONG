@@ -16,7 +16,7 @@ if str(RAIZ) not in sys.path:
 import streamlit as st  # noqa: E402
 
 from app import session, ui  # noqa: E402
-from db.connection import inicializar_banco  # noqa: E402
+from db.connection import garantir_dados_iniciais, inicializar_banco  # noqa: E402
 from views import adocao, auth, catalogo, castracao, painel_admin, perfil_dono  # noqa: E402
 
 try:
@@ -31,8 +31,9 @@ INSTAGRAM_URL = "https://www.instagram.com/adotapetsjc/"
 
 @st.cache_resource
 def _bootstrap() -> bool:
-    """Cria o schema do banco uma unica vez por sessao do servidor."""
+    """Cria o schema e popula o banco com dados de teste se estiver vazio."""
     inicializar_banco()
+    garantir_dados_iniciais()
     return True
 
 

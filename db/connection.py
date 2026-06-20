@@ -52,3 +52,33 @@ def inicializar_banco(
         conn.commit()
     finally:
         conn.close()
+
+
+def carregar_seed(
+    db_path: str | Path | None = None,
+    seed_path: str | Path | None = None,
+) -> None:
+    """Executa o seed.sql (dados de teste) no banco informado."""
+    seed = Path(seed_path or config.SEED_PATH)
+    sql = seed.read_text(encoding="utf-8")
+    conn = get_connection(db_path)
+    try:
+        conn.executescript(sql)
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def garantir_dados_iniciais(db_path: str | Path | None = None) -> None:
+    """Carrega o seed apenas se o banco estiver vazio (nenhum usuario).
+
+    Util para deploys efemeros (ex.: Streamlit Cloud), onde o banco e
+    recriado a cada inicializacao. Nao apaga dados existentes.
+    """
+    conn = get_connection(db_path)
+    try:
+        vazio = conn.execute("SELECT COUNT(*) FROM usuario").fetchone()[0] == 0
+    finally:
+        conn.close()
+    if vazio:
+        carregar_seed(db_path)
