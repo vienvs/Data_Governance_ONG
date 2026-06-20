@@ -21,7 +21,8 @@ PERGUNTAS = [
 
 def render() -> None:
     usuario = session.requer_autenticacao()
-    ui.hero("Adoção", "Solicite a adoção de um animal disponível e acompanhe o status.")
+    ui.hero("Adoção", "Solicite a adoção de um animal disponível e acompanhe o status.",
+            icone="clipboard-check")
 
     with closing(get_connection()) as conn:
         perfil = servico_perfil_dono.obter_perfil_por_usuario(conn, usuario.id)

@@ -40,25 +40,15 @@ def _bootstrap() -> bool:
 def _menu(titulo, labels, icones, chave):
     """Mostra um menu de navegacao. Usa option_menu se disponivel; senao radio."""
     if TEM_OPTION_MENU:
+        escuro = st.session_state.get("modo_escuro", False)
         return option_menu(
             menu_title=titulo,
             options=labels,
             icons=icones,
-            menu_icon="house-heart",
+            menu_icon="list",
             default_index=0,
             key=chave,
-            styles={
-                "container": {"background-color": "transparent", "padding": "0"},
-                "icon": {"color": "#F4845F", "font-size": "17px"},
-                "nav-link": {
-                    "font-size": "15px",
-                    "font-weight": "600",
-                    "border-radius": "10px",
-                    "margin": "3px 0",
-                    "--hover-color": "#FFE3D3",
-                },
-                "nav-link-selected": {"background-color": "#F4845F", "color": "white"},
-            },
+            styles=ui.estilos_menu(escuro),
         )
     return st.radio(titulo, labels, key=chave)
 
@@ -68,8 +58,8 @@ def _rodape_sidebar() -> None:
     st.write("")
     st.toggle("Modo escuro", key="modo_escuro")
     st.markdown(
-        f"<a href='{INSTAGRAM_URL}' target='_blank' "
-        "style='text-decoration:none;font-weight:700;'>Siga no Instagram @adotapetsjc</a>",
+        f"<a class='link-rodape' href='{INSTAGRAM_URL}' target='_blank'>"
+        "<i class='bi bi-instagram'></i> @adotapetsjc</a>",
         unsafe_allow_html=True,
     )
 

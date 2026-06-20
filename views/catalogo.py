@@ -23,6 +23,7 @@ def render() -> None:
     ui.hero(
         "Animais para adoção",
         "Conheça quem está esperando por um novo lar e um pouco de carinho.",
+        icone="heart",
     )
 
     with closing(get_connection()) as conn:
@@ -51,10 +52,10 @@ def render() -> None:
                     st.image(str(file_storage.caminho_absoluto(caminho)), use_container_width=True)
                 else:
                     st.markdown(
-                        "<div style='height:150px;border-radius:12px;"
-                        "background:linear-gradient(135deg,#FFE3D3,#FFF1E6);"
+                        "<div style='height:150px;border-radius:6px;"
+                        "background:#F2ECE7;border:1px solid #E6E0DB;"
                         "display:flex;align-items:center;justify-content:center;"
-                        "color:#C58B6F;font-weight:700;'>Sem foto</div>",
+                        "color:#8A817A;font-weight:600;'>Sem foto</div>",
                         unsafe_allow_html=True,
                     )
                 st.markdown(f"### {animal['nome']}")

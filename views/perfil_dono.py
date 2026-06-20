@@ -16,7 +16,8 @@ from services.validators import campos_obrigatorios_ausentes
 def render() -> None:
     usuario = session.requer_autenticacao()
     ui.hero("Meu perfil de adotante",
-            "Complete seus dados e documentos para poder solicitar uma adoção.")
+            "Complete seus dados e documentos para poder solicitar uma adoção.",
+            icone="person-vcard")
 
     with closing(get_connection()) as conn:
         perfil = servico_perfil_dono.obter_perfil_por_usuario(conn, usuario.id)

@@ -1,7 +1,7 @@
 """Estilo visual da aplicacao.
 
-Centraliza o CSS e alguns componentes visuais reutilizaveis (hero, badge),
-para deixar a interface com aparencia de site, com animacoes suaves.
+Design minimalista e plano (sem degrades), com formas mais retas, fonte Inter
+e tema claro/escuro. Centraliza o CSS e componentes visuais reutilizaveis.
 """
 from __future__ import annotations
 
@@ -9,154 +9,185 @@ import streamlit as st
 
 _CSS = """
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css');
 
-html, body, [class*="css"], .stApp {
-    font-family: 'Nunito', sans-serif;
+:root {
+    --cor-primaria: #E2643C;
+    --cor-texto: #1F1B18;
+    --cor-suave: #6B635D;
+    --cor-borda: #E6E0DB;
+    --cor-superficie: #FFFFFF;
+    --cor-fundo: #FBFAF9;
 }
+
+html, body, [class*="css"], .stApp,
+input, textarea, button, select {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.stApp { background-color: var(--cor-fundo); }
 
 .main .block-container {
-    animation: fadeIn 0.6s ease;
     padding-top: 2rem;
-    max-width: 1100px;
+    max-width: 1080px;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
+/* Barra superior do Streamlit */
+[data-testid="stHeader"] {
+    background: var(--cor-fundo);
+    border-bottom: 1px solid var(--cor-borda);
 }
 
-@keyframes pop {
-    0%   { transform: scale(0.96); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
+/* Cabecalho de pagina (plano, sem degrade) */
+.cabecalho {
+    padding: 0.2rem 0 1rem 0;
+    margin-bottom: 1.4rem;
+    border-bottom: 1px solid var(--cor-borda);
 }
+.cabecalho .titulo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--cor-texto);
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+}
+.cabecalho .titulo i { color: var(--cor-primaria); font-size: 1.6rem; }
+.cabecalho .sub { color: var(--cor-suave); font-size: 1rem; margin-top: 0.25rem; }
 
-.hero {
-    background: linear-gradient(135deg, #F4845F 0%, #FFB088 100%);
-    color: #ffffff;
-    padding: 2.4rem 2.2rem;
-    border-radius: 22px;
-    margin-bottom: 1.6rem;
-    box-shadow: 0 12px 32px rgba(244, 132, 95, 0.35);
-    animation: pop 0.5s ease;
-}
-.hero h1 {
-    color: #ffffff;
-    margin: 0 0 0.4rem 0;
-    font-weight: 800;
-    font-size: 2.1rem;
-    letter-spacing: -0.5px;
-}
-.hero p {
-    margin: 0;
-    font-size: 1.08rem;
-    opacity: 0.96;
-}
+h1, h2, h3, h4 { color: var(--cor-texto); letter-spacing: -0.01em; }
 
-.badge {
+/* Selos de status (retos) */
+.selo {
     display: inline-block;
-    padding: 0.18rem 0.7rem;
-    border-radius: 999px;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.2px;
+    padding: 0.12rem 0.55rem;
+    border-radius: 4px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    border: 1px solid transparent;
 }
-.badge-ok   { background: #E6F4EA; color: #1E7D34; }
-.badge-wait { background: #FFF3D6; color: #9A6B00; }
-.badge-no   { background: #FDE7E7; color: #B42318; }
+.selo-ok   { background: #EAF4EC; color: #1E7D34; border-color: #CBE6D1; }
+.selo-wait { background: #FBF1D9; color: #8A5D00; border-color: #EBDBB0; }
+.selo-no   { background: #FBE6E5; color: #B42318; border-color: #F0CBC8; }
 
+/* Botoes planos e retos */
 .stButton > button {
-    border-radius: 12px;
-    font-weight: 700;
-    border: none;
-    padding: 0.5rem 1.1rem;
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    border-radius: 6px;
+    font-weight: 600;
+    border: 1px solid var(--cor-primaria);
+    background: var(--cor-primaria);
+    color: #FFFFFF;
+    padding: 0.45rem 1rem;
+    transition: filter 0.12s ease;
 }
-.stButton > button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-}
+.stButton > button:hover { filter: brightness(0.94); color: #FFFFFF; }
 
+/* Cartoes: borda fina, cantos discretos, sem sombra/elevacao */
 div[data-testid="stVerticalBlockBorderWrapper"] {
-    border-radius: 16px !important;
-    border: 1px solid #FFE3D3 !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
-    transition: transform 0.16s ease, box-shadow 0.16s ease;
-    background: #ffffff;
-}
-div[data-testid="stVerticalBlockBorderWrapper"]:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.10);
+    border-radius: 8px !important;
+    border: 1px solid var(--cor-borda) !important;
+    background: var(--cor-superficie);
 }
 
-div[data-testid="stImage"] img {
-    border-radius: 12px;
+div[data-testid="stImage"] img { border-radius: 6px; }
+
+/* Campos de formulario retos */
+.stTextInput input, .stNumberInput input, .stDateInput input, textarea,
+div[data-baseweb="select"] > div {
+    border-radius: 6px !important;
 }
 
-h1, h2, h3 { color: #3A2E2A; }
-
+/* Sidebar */
 section[data-testid="stSidebar"] {
-    background: #FFF1E6;
+    background: var(--cor-superficie);
+    border-right: 1px solid var(--cor-borda);
 }
 section[data-testid="stSidebar"] .block-container { padding-top: 1.2rem; }
+
+.link-rodape {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--cor-primaria);
+}
+.link-rodape i { font-size: 1.05rem; }
 </style>
 """
 
 _CSS_ESCURO = """
 <style>
-.stApp { background-color: #1e1a17; }
+:root {
+    --cor-texto: #ECE6E1;
+    --cor-suave: #A89F98;
+    --cor-borda: #322C26;
+    --cor-superficie: #211D19;
+    --cor-fundo: #161311;
+}
+.stApp { background-color: var(--cor-fundo); }
+[data-testid="stHeader"] { background: var(--cor-fundo); border-bottom: 1px solid var(--cor-borda); }
+[data-testid="stToolbar"] { color: var(--cor-texto); }
+
 .stApp, .main .block-container, p, li, label, .stMarkdown,
 [data-testid="stWidgetLabel"], [data-testid="stMarkdownContainer"] {
-    color: #F3EAE3 !important;
+    color: var(--cor-texto);
 }
-h1, h2, h3, h4 { color: #FFF3EC !important; }
-[data-testid="stCaptionContainer"], .stCaption { color: #C9BBB0 !important; }
+h1, h2, h3, h4, .cabecalho .titulo { color: var(--cor-texto); }
+.cabecalho .sub, [data-testid="stCaptionContainer"], .stCaption { color: var(--cor-suave) !important; }
 
-section[data-testid="stSidebar"] { background: #2a2420 !important; }
+section[data-testid="stSidebar"] { background: var(--cor-superficie); border-right: 1px solid var(--cor-borda); }
 
 div[data-testid="stVerticalBlockBorderWrapper"] {
-    background: #2a2420 !important;
-    border-color: #4a3f37 !important;
+    background: var(--cor-superficie) !important;
+    border-color: var(--cor-borda) !important;
 }
-div[data-testid="stExpander"] { background: #2a2420 !important; }
-div[data-testid="stExpander"] details { background: #2a2420 !important; }
+div[data-testid="stExpander"], div[data-testid="stExpander"] details {
+    background: var(--cor-superficie) !important;
+    border-color: var(--cor-borda) !important;
+}
 
 .stTextInput input, .stNumberInput input, .stDateInput input, textarea,
 div[data-baseweb="select"] > div {
-    background-color: #2f2823 !important;
-    color: #F3EAE3 !important;
+    background-color: #2A241F !important;
+    color: var(--cor-texto) !important;
+    border-color: var(--cor-borda) !important;
 }
+.stTabs [data-baseweb="tab"] { color: var(--cor-texto); }
 </style>
 """
 
 
 def aplicar_estilo(escuro: bool = False) -> None:
-    """Injeta o CSS global. Deve ser chamada uma vez por pagina.
-
-    Se escuro for True, aplica tambem o tema escuro por cima do tema claro.
-    """
+    """Injeta o CSS global. Se escuro for True, aplica o tema escuro por cima."""
     st.markdown(_CSS, unsafe_allow_html=True)
     if escuro:
         st.markdown(_CSS_ESCURO, unsafe_allow_html=True)
 
 
-def hero(titulo: str, subtitulo: str = "") -> None:
-    """Renderiza um cabecalho de destaque com gradiente."""
-    html = f"<div class='hero'><h1>{titulo}</h1>"
+def cabecalho(titulo: str, subtitulo: str = "", icone: str | None = None) -> None:
+    """Cabecalho de pagina plano (sem degrade), com icone opcional."""
+    icone_html = f"<i class='bi bi-{icone}'></i>" if icone else ""
+    html = f"<div class='cabecalho'><div class='titulo'>{icone_html}{titulo}</div>"
     if subtitulo:
-        html += f"<p>{subtitulo}</p>"
+        html += f"<div class='sub'>{subtitulo}</div>"
     html += "</div>"
     st.markdown(html, unsafe_allow_html=True)
 
 
+# Mantem compatibilidade com chamadas existentes (hero == cabecalho).
+def hero(titulo: str, subtitulo: str = "", icone: str | None = None) -> None:
+    cabecalho(titulo, subtitulo, icone)
+
+
 def badge(texto: str, tipo: str = "ok") -> str:
-    """Devolve o HTML de um selo colorido (ok, wait, no)."""
-    classe = {"ok": "badge-ok", "wait": "badge-wait", "no": "badge-no"}.get(tipo, "badge-ok")
-    return f"<span class='badge {classe}'>{texto}</span>"
+    classe = {"ok": "selo-ok", "wait": "selo-wait", "no": "selo-no"}.get(tipo, "selo-ok")
+    return f"<span class='selo {classe}'>{texto}</span>"
 
 
 def badge_status(status: str) -> str:
-    """Selo a partir do status de aprovacao ou de animal."""
     mapa = {
         "aprovado": ("Aprovado", "ok"),
         "disponivel": ("Disponível", "ok"),
@@ -166,3 +197,26 @@ def badge_status(status: str) -> str:
     }
     texto, tipo = mapa.get(status, (status, "ok"))
     return badge(texto, tipo)
+
+
+def estilos_menu(escuro: bool = False) -> dict:
+    """Estilos do option_menu, adaptados ao tema (claro/escuro)."""
+    if escuro:
+        texto = "#ECE6E1"
+        hover = "#2C2620"
+    else:
+        texto = "#1F1B18"
+        hover = "#F2ECE7"
+    return {
+        "container": {"background-color": "transparent", "padding": "0"},
+        "icon": {"color": "#E2643C", "font-size": "16px"},
+        "nav-link": {
+            "font-size": "14px",
+            "font-weight": "600",
+            "color": texto,
+            "border-radius": "6px",
+            "margin": "2px 0",
+            "--hover-color": hover,
+        },
+        "nav-link-selected": {"background-color": "#E2643C", "color": "#FFFFFF"},
+    }

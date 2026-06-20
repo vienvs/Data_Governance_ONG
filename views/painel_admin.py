@@ -23,7 +23,8 @@ from repositories.dono_repository import DonoRepository
 
 def render() -> None:
     admin = session.requer_admin()
-    ui.hero("Painel administrativo", f"Sessão de {admin.nome}. Gestão completa da ONG.")
+    ui.hero("Painel administrativo", f"Sessão de {admin.nome}. Gestão completa da ONG.",
+            icone="shield-lock")
 
     abas = st.tabs(["Donos / Documentos", "Animais", "Adoções", "Castrações / Agenda", "Auditoria"])
     with abas[0]:

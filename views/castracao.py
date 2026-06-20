@@ -15,7 +15,8 @@ from services.validators import campos_obrigatorios_ausentes
 
 def render() -> None:
     usuario = session.requer_autenticacao()
-    ui.hero("Castração", "Solicite a castração do seu pet. A ONG analisa e agenda o procedimento.")
+    ui.hero("Castração", "Solicite a castração do seu pet. A ONG analisa e agenda o procedimento.",
+            icone="calendar-check")
 
     aba_nova, aba_minhas = st.tabs(["Solicitar castração", "Minhas solicitações"])
     with aba_nova:

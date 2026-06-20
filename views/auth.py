@@ -17,6 +17,7 @@ def render() -> None:
     ui.hero(
         "Bem-vindo à Adota Pet SJC e RonRon",
         "Conectamos cães e gatos a lares responsáveis em São José dos Campos. Entre ou crie sua conta para começar.",
+        icone="house-heart",
     )
 
     col_form, col_info = st.columns([3, 2])
